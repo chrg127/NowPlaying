@@ -37,10 +37,13 @@ RowLayout {
         height: separator.height
         width: nowPlayingColumn.width
         hoverEnabled: true
+
         ColumnLayout {
             anchors.centerIn: parent
             spacing: 0
             id: nowPlayingColumn
+
+            // These two labels correspond to the 'NOW PLAYING' text
             Label {
                 id: nowPlayingLabel1
                 Layout.alignment: Qt.AlignRight
@@ -51,6 +54,7 @@ RowLayout {
                 font.bold: true
                 font.family: plasmoid.configuration.fontFamily
             }
+
             Label {
                 id: nowPlayingLabel2
                 Layout.alignment: Qt.AlignRight
@@ -61,6 +65,8 @@ RowLayout {
                 font.pixelSize: 16
                 font.family: plasmoid.configuration.fontFamily
             }
+
+            // This refers to the small controls you can find when hovering on the left part of the widget.
             RowLayout {
                 id: mediaControls
                 opacity: mediaControlsMouseArea.containsMouse
@@ -86,8 +92,7 @@ RowLayout {
                     Layout.preferredWidth: nowPlayingLabel2.width / 3
                     id: playButton
                     contentItem: PlasmaCore.IconItem {
-                        source: mediaSource.playbackStatus
-                                === "Playing" ? "media-playback-start" : "media-playback-pause"
+                        source: mediaSource.playbackStatus === "Playing" ? "media-playback-pause" : "media-playback-start"
                     }
                     padding: 0
                     background: null

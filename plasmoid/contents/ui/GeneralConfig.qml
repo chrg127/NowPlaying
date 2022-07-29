@@ -7,16 +7,12 @@ Item {
     id: configRoot
 
     signal configurationChanged
-
     property alias cfg_opacity: opacitySpinBox.value
-
     property string cfg_preferredSource
-
 	property string cfg_fontFamily
 
     ColumnLayout {
         spacing: units.smallSpacing * 2
-
 
         RowLayout{
             Label {
@@ -30,11 +26,9 @@ Item {
         }
 
         RowLayout{
-
             Label {
                 text: i18n("Preferred media source")
             }
-
             ListModel {
                 id: sourcesModel
                 Component.onCompleted: {
@@ -54,7 +48,6 @@ Item {
                     append(arr)
                 }
             }
-
             ComboBox {
                 id: sourcesComboBox
                 model: sourcesModel
@@ -85,7 +78,6 @@ Item {
                 }
             }
         }
-
     }
 
     PlasmaCore.DataSource {
