@@ -4,9 +4,17 @@ import QtQuick.Controls 2.12
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.core 2.0 as PlasmaCore
 
+/*
+ * This file describes the actual GUI of the plasmoid
+ * (what people would normally call a 'View')
+ */
+
 RowLayout {
     id: fullView
     focus: true
+
+    // This controls plasmoid shortcuts.
+    /*
     Keys.onReleased: {
         if (!event.modifiers) {
             event.accepted = true
@@ -21,6 +29,8 @@ RowLayout {
             }
         }
     }
+    */
+
     MouseArea {
         // Layout.alignment: Qt.AlignRight
         id: mediaControlsMouseArea
@@ -102,6 +112,8 @@ RowLayout {
             }
         }
     }
+
+    // This is that little vertical bar between "NOW PLAYING" and the music info.
     Rectangle {
         id: separator
         width: 1
@@ -109,6 +121,7 @@ RowLayout {
         Layout.fillHeight: true
     }
 
+    // The actual music information.
     ColumnLayout {
         Layout.fillWidth: true
         id: infoColumn
@@ -127,7 +140,7 @@ RowLayout {
             elide: Text.ElideRight
             Layout.maximumWidth: 300
             Layout.fillWidth: true
-            text: mediaSource.artist
+            text: mediaSource.album
             font.pixelSize: 26
             // color: "red"
             lineHeight: 0.8

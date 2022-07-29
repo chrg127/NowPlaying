@@ -29,24 +29,19 @@ Item {
 
         property bool loaded: hasLoaded()
 
-        property string playerIcon: loaded ? currentData["Desktop Icon Name"] : ""
-        property string playerName: loaded ? currentData.Identity : ""
+        // property string playerIcon: loaded ? currentData["Desktop Icon Name"] : ""
+        property string playerName:     loaded ? currentData.Identity       : ""
         property string playbackStatus: loaded ? currentData.PlaybackStatus : ""
-        property string track: currentMetadata ? currentMetadata["xesam:title"]
-                                                 || "" : ""
-        property string artist: currentMetadata ? currentMetadata["xesam:artist"]
-                                                  || "" : ""
-        property string album: currentMetadata ? currentMetadata["xesam:album"]
-                                                 || "" : ""
-        property string albumArt: currentMetadata ? currentMetadata["mpris:artUrl"]
-                                                    || "" : ""
-        property double length: currentMetadata ? currentMetadata["mpris:length"]
-                                                  || 0 : 0
+        property string track:      currentMetadata ? currentMetadata["xesam:title"]  || "" : ""
+        property string artist:     currentMetadata ? currentMetadata["xesam:artist"] || "" : ""
+        property string album:      currentMetadata ? currentMetadata["xesam:album"]  || "" : ""
+        property string albumArt:   currentMetadata ? currentMetadata["mpris:artUrl"] || "" : ""
+        property double length:     currentMetadata ? currentMetadata["mpris:length"] || 0 : 0
         property double position: loaded ? currentData.Position || 0 : 0
 
         function hasLoaded() {
-            if (typeof currentData === "undefined"
-                    || typeof currentMetadata === "undefined") {
+            if (typeof currentData     === "undefined"
+             || typeof currentMetadata === "undefined") {
                 return false
             } else {
                 return true
@@ -69,36 +64,18 @@ Item {
         var time = minutes + ":" + seconds
         return time
     }
-    function action_open() {
-        serviceOp("Raise")
-    }
-    function mediaPlay() {
-        serviceOp("Play")
-    }
-    function mediaPause() {
-        serviceOp("Pause")
-    }
-    function mediaToggle() {
-        serviceOp("PlayPause")
-    }
-    function mediaPrev() {
-        serviceOp("Previous")
-    }
-    function mediaNext() {
-        serviceOp("Next")
-    }
-    function mediaStop() {
-        serviceOp("Stop")
-    }
-    function updatePosition() {
-        serviceOp("GetPosition")
-    }
-    function setPosition(s) {
-        serviceOp("SetPosition", s)
-    }
-    function mediaSeek(s) {
-        serviceOp("Seek", s)
-    }
+
+    function action_open()      { serviceOp("Raise") }
+    function mediaPlay()        { serviceOp("Play") }
+    function mediaPause()       { serviceOp("Pause") }
+    function mediaToggle()      { serviceOp("PlayPause") }
+    function mediaPrev()        { serviceOp("Previous") }
+    function mediaNext()        { serviceOp("Next") }
+    function mediaStop()        { serviceOp("Stop") }
+    function updatePosition()   { serviceOp("GetPosition") }
+    function setPosition(s)     { serviceOp("SetPosition", s) }
+    function mediaSeek(s)       { serviceOp("Seek", s) }
+
     function serviceOp(op, n) {
         var service = mediaSource.serviceForSource(mediaSource.currentSource)
         var operation = service.operationDescription(op)
