@@ -2,19 +2,21 @@
 Encoding=UTF-8
 
 Name=NowPlaying
-Comment=An aesthetic song name widget with media controls. Meant to be placed on Desktop not in panel.
+Comment=An aesthetic song name widget with media controls. Meant to be placed on the Desktop, not in a panel.
 Icon=applications-multimedia
 Type=Service
 
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
 
-X-KDE-PluginInfo-Author=nhilistdev
+# I wish I could credit the original dev too, but I have no idea how.
+#X-KDE-PluginInfo-Author=nhilistdev
+X-KDE-PluginInfo-Author=chrg
 X-KDE-PluginInfo-Category=Multimedia
 X-KDE-PluginInfo-Name=org.kde.NowPlaying
 X-KDE-PluginInfo-License=GPLv3
-X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Version=0.2
 X-Plasma-StandAloneApp=true
-X-KDE-PluginInfo-Website=https://github.com/nhilist-dev/NowPlaying
+X-KDE-PluginInfo-Website=https://github.com/chrg127/NowPlaying
 X-Plasma-Provides=org.kde.plasma.multimediacontrols
 X-KDE-ServiceTypes=Plasma/Applet
