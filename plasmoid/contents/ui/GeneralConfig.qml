@@ -18,6 +18,16 @@ Item {
     property string cfg_firstRowInfo
     property string cfg_secondRowInfo
 
+    function indexOf(list, toFind, def) {
+        for (var i = 0; i < list.count; i++) {
+            var obj = list.get(i)
+            if (obj && obj.value === toFind) {
+                return i
+            }
+        }
+        return def
+    }
+
     ColumnLayout {
         spacing: units.smallSpacing * 2
 
@@ -104,6 +114,11 @@ Item {
                         configRoot.configurationChanged()
                     }
                 }
+                Component.onCompleted: {
+                    console.log("font: " + cfg_fontFamily)
+                    // current doesn't work: the model at this point has count 0
+                    currentIndex = indexOf(model, cfg_fontFamily, 0)
+                }
             }
         }
 
@@ -159,6 +174,9 @@ Item {
                         cfg_firstRowInfo = current.value
                     }
                 }
+                Component.onCompleted: {
+                    currentIndex = indexOf(model, cfg_firstRowInfo, 0)
+                }
             }
         }
 
@@ -177,6 +195,9 @@ Item {
                     if (current) {
                         cfg_secondRowInfo = current.value
                     }
+                }
+                Component.onCompleted: {
+                    currentIndex = indexOf(model, cfg_secondRowInfo, 0)
                 }
             }
         }
