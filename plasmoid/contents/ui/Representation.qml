@@ -49,7 +49,7 @@ RowLayout {
                 Layout.alignment: Qt.AlignRight
                 text: "NOW"
                 lineHeight: 0.8
-                // color: "orange"
+                color: plasmoid.configuration.secondaryColor
                 font.pixelSize: 16
                 font.bold: true
                 font.family: plasmoid.configuration.fontFamily
@@ -60,7 +60,7 @@ RowLayout {
                 Layout.alignment: Qt.AlignRight
                 text: "PLAYING"
                 lineHeight: 0.8
-                // color: "orange"
+                color: plasmoid.configuration.secondaryColor
                 font.bold: true
                 font.pixelSize: 16
                 font.family: plasmoid.configuration.fontFamily
@@ -76,43 +76,46 @@ RowLayout {
                         duration: 250
                     }
                 }
+
                 Button {
                     Layout.preferredWidth: nowPlayingLabel2.width / 3
                     contentItem: PlasmaCore.IconItem {
                         source: "media-skip-backward"
                     }
                     padding: 0
+                    /* color: plasmoid.configuration.mainColor */
                     background: null
                     onClicked: {
                         root.mediaPrev()
-                        console.log("prev clicked")
                     }
                 }
+
                 Button {
                     Layout.preferredWidth: nowPlayingLabel2.width / 3
                     id: playButton
                     contentItem: PlasmaCore.IconItem {
-                        source: mediaSource.playbackStatus === "Playing" ? "media-playback-pause" : "media-playback-start"
+                        source: mediaSource.playbackStatus === "Playing" ? "media-playback-pause"
+                                                                         : "media-playback-start"
                     }
                     padding: 0
+                    /* color: plasmoid.configuration.mainColor */
                     background: null
                     onClicked: {
                         root.mediaToggle()
-                        console.log("pause clicked")
                     }
                 }
+
                 Button {
                     Layout.preferredWidth: nowPlayingLabel2.width / 3
                     contentItem: PlasmaCore.IconItem {
                         source: "media-skip-forward"
                     }
+                    padding: 0
+                    /* color: plasmoid.configuration.mainColor */
+                    background: null
                     onClicked: {
                         root.mediaNext()
-                        console.log(mediaSource.playbackStatus)
-                        console.log("next clicked")
                     }
-                    padding: 0
-                    background: null
                 }
             }
         }
@@ -122,32 +125,59 @@ RowLayout {
     Rectangle {
         id: separator
         width: 1
-        // color: "black"
+        color: plasmoid.configuration.mainColor
         Layout.fillHeight: true
+    }
+
+    function formatPosition(pos, len) {
+        function pad(num, size) {
+            num = num.toString();
+            while (num.length < size)
+                num = "0" + num;
+            return num;
+        }
+        var mins = Math.floor(pos / 1000000 / 60)
+        var secs = Math.floor(pos / 1000000 % 60)
+        var max_mins = Math.floor(len / 1000000 / 60)
+        var max_secs = Math.floor(len / 1000000 % 60)
+        return "%1:%2/%3:%4".arg(pad(mins, 2))
+                            .arg(pad(secs, 2))
+                            .arg(pad(max_mins, 2))
+                            .arg(pad(max_secs, 2))
     }
 
     // The actual music information.
     ColumnLayout {
         Layout.fillWidth: true
         id: infoColumn
+
         PlasmaComponents.Label {
             font.family: plasmoid.configuration.fontFamily
-            text: mediaSource.track
+            text: plasmoid.configuration.firstRowInfo === "name"   ? mediaSource.track
+                : plasmoid.configuration.firstRowInfo === "artist" ? mediaSource.artist
+                : plasmoid.configuration.firstRowInfo === "album"  ? mediaSource.album
+                : plasmoid.configuration.firstRowInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
+                : ""
             Layout.fillWidth: true
             font.pixelSize: 28
-            // color: "red"
+            color: plasmoid.configuration.mainColor
             lineHeight: 0.8
             font.bold: true
             elide: Text.ElideRight
         }
+
         PlasmaComponents.Label {
             font.family: plasmoid.configuration.fontFamily
             elide: Text.ElideRight
             Layout.maximumWidth: 300
             Layout.fillWidth: true
-            text: mediaSource.album
+            text: plasmoid.configuration.secondRowInfo === "name"   ? mediaSource.track
+                : plasmoid.configuration.secondRowInfo === "artist" ? mediaSource.artist
+                : plasmoid.configuration.secondRowInfo === "album"  ? mediaSource.album
+                : plasmoid.configuration.secondRowInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
+                : ""
             font.pixelSize: 26
-            // color: "red"
+            color: plasmoid.configuration.mainColor
             lineHeight: 0.8
         }
     }

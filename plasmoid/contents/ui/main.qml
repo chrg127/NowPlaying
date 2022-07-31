@@ -29,7 +29,6 @@ Item {
 
         property bool loaded: hasLoaded()
 
-        // property string playerIcon: loaded ? currentData["Desktop Icon Name"] : ""
         property string playerName:     loaded ? currentData.Identity       : ""
         property string playbackStatus: loaded ? currentData.PlaybackStatus : ""
         property string track:      currentMetadata ? currentMetadata["xesam:title"]  || "" : ""
@@ -37,15 +36,11 @@ Item {
         property string album:      currentMetadata ? currentMetadata["xesam:album"]  || "" : ""
         property string albumArt:   currentMetadata ? currentMetadata["mpris:artUrl"] || "" : ""
         property double length:     currentMetadata ? currentMetadata["mpris:length"] || 0 : 0
-        property double position: loaded ? currentData.Position || 0 : 0
+        property double position:       loaded ? currentData.Position || 0 : 0
 
         function hasLoaded() {
-            if (typeof currentData     === "undefined"
-             || typeof currentMetadata === "undefined") {
-                return false
-            } else {
-                return true
-            }
+            return typeof currentData     !== "undefined"
+                && typeof currentMetadata !== "undefined"
         }
 
         onSourceRemoved: {

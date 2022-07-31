@@ -15,9 +15,25 @@
 		<label>Preferred source name for MPRIS2</label>
 	</entry>
 	<entry name="fontFamily" type="String">
-		<default>"Noto Sans"</default>
+		<default>Noto Sans</default>
 		<label>Font family</label>
-	</entry>
+    </entry>
+    <entry name="secondaryColor" type="Color">
+        <default>#ff181717</default>
+        <label>The color for the NOW PLAYING text.</label>
+    </entry>
+    <entry name="mainColor" type="Color">
+        <default>#fffcfcfc</default>
+        <label>who cares</label>
+    </entry>
+    <entry name="firstRowInfo" type="String">
+        <default>name</default>
+        <label>who cares</label>
+    </entry>
+    <entry name="secondRowInfo" type="String">
+        <default>album</default>
+        <label>who cares</label>
+    </entry>
   </group>
 
 </kcfg>
