@@ -42,7 +42,7 @@ QtLayouts.RowLayout {
         QtLayouts.Layout.minimumWidth: units.gridUnit * 10
         model: fontModel
         textRole: "text"
-        currentIndex: fontValue
+        currentIndex: 0
 
         onCurrentIndexChanged: {
             var current = model.get(currentIndex)

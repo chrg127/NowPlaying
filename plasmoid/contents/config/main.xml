@@ -13,26 +13,146 @@
 	<entry name="preferredSource" type="String">
 		<default>@multiplex</default>
 		<label>Preferred source name for MPRIS2</label>
-	</entry>
-	<entry name="fontFamily" type="String">
-		<default>Noto Sans</default>
-		<label>Font family</label>
     </entry>
-    <entry name="secondaryColor" type="Color">
-        <default>#ff181717</default>
-        <label>The color for the NOW PLAYING text.</label>
-    </entry>
-    <entry name="mainColor" type="Color">
-        <default>#fffcfcfc</default>
-        <label>who cares</label>
-    </entry>
-    <entry name="firstRowInfo" type="String">
+
+    <entry name="firstInfo" type="string">
         <default>name</default>
-        <label>who cares</label>
+        <label></label>
     </entry>
-    <entry name="secondRowInfo" type="String">
+    <entry name="firstFont" type="string">
+        <default>default</default>
+        <label></label>
+    </entry>
+    <entry name="firstFontColor" type="color">
+        <default>#fcfcfc</default>
+        <label></label>
+    </entry>
+    <entry name="firstFontBold" type="bool">
+        <default>true</default>
+        <label></label>
+    </entry>
+    <entry name="firstFontItalic" type="bool">
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="firstFontHeight" type="int"   >
+        <default>28</default>
+        <label></label>
+    </entry>
+    <entry name="firstShadowEnable" type="bool">
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="firstShadowColor" type="color">
+        <default>#181717</default>
+        <label></label>
+    </entry>
+    <entry name="firstShadowRadius" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="firstShadowHoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="firstShadowVoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+
+    <entry name="secondInfo" type="string">
         <default>album</default>
-        <label>who cares</label>
+        <label></label>
+    </entry>
+    <entry name="secondFont" type="string">
+        <default>default</default>
+        <label></label>
+    </entry>
+    <entry name="secondFontColor" type="color" >
+        <default>#fcfcfc</default>
+        <label></label>
+    </entry>
+    <entry name="secondFontBold" type="bool"  >
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="secondFontItalic" type="bool"  >
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="secondFontHeight" type="int"   >
+        <default>26</default>
+        <label></label>
+    </entry>
+    <entry name="secondShadowEnable" type="bool">
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="secondShadowColor" type="color">
+        <default>#181717</default>
+        <label></label>
+    </entry>
+    <entry name="secondShadowRadius" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="secondShadowHoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="secondShadowVoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+
+    <entry name="labelFont" type="string">
+        <default>default</default>
+        <label></label>
+    </entry>
+    <entry name="labelFontColor" type="color" >
+        <default>#181717</default>
+        <label></label>
+    </entry>
+    <entry name="labelFontBold" type="bool"  >
+        <default>true</default>
+        <label></label>
+    </entry>
+    <entry name="labelFontItalic" type="bool"  >
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="labelFontHeight" type="int"   >
+        <default>16</default>
+        <label></label>
+    </entry>
+    <entry name="labelShadowEnable" type="bool">
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry name="labelShadowColor" type="color">
+        <default>#181717</default>
+        <label></label>
+    </entry>
+    <entry name="labelShadowRadius" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="labelShadowHoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+    <entry name="labelShadowVoff" type="int">
+        <default>0</default>
+        <label></label>
+    </entry>
+
+    <entry name="lineWidth" type="int">
+        <default>1</default>
+        <label></label>
+    </entry>
+    <entry name="lineColor" type="color">
+        <default>#fcfcfc</default>
+        <label></label>
     </entry>
   </group>
 

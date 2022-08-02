@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.12
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.core 2.0 as PlasmaCore
+import QtGraphicalEffects 1.12
 
 /*
  * This file describes the actual GUI of the plasmoid
@@ -31,6 +32,21 @@ RowLayout {
     }
     */
 
+    function formatPosition(pos, len) {
+        function pad(num, size) {
+            num = num.toString();
+            while (num.length < size)
+                num = "0" + num;
+            return num;
+        }
+        function fmt(p) {
+            var m = Math.floor(p / 1000000 / 60)
+            var s = Math.floor(p / 1000000 % 60)
+            return "%1:%2".arg(pad(m, 2)).arg(pad(s, 2))
+        }
+        return "%1/%2".arg(fmt(pos)).arg(fmt(len))
+    }
+
     MouseArea {
         // Layout.alignment: Qt.AlignRight
         id: mediaControlsMouseArea
@@ -49,10 +65,19 @@ RowLayout {
                 Layout.alignment: Qt.AlignRight
                 text: "NOW"
                 lineHeight: 0.8
-                color: plasmoid.configuration.secondaryColor
-                font.pixelSize: 16
-                font.bold: true
-                font.family: plasmoid.configuration.fontFamily
+                font.family:    plasmoid.configuration.labelFont
+                color:          plasmoid.configuration.labelFontColor
+                font.bold:      plasmoid.configuration.labelFontBold
+                font.italic:    plasmoid.configuration.labelFontItalic
+                font.pixelSize: plasmoid.configuration.labelFontHeight
+                layer.enabled: plasmoid.configuration.labelShadowEnable
+                layer.effect: DropShadow {
+                    color:              plasmoid.configuration.labelShadowColor
+                    radius:             plasmoid.configuration.labelShadowRadius
+                    horizontalOffset:   plasmoid.configuration.labelShadowHoff
+                    verticalOffset:     plasmoid.configuration.labelShadowVoff
+                    samples:            0
+                }
             }
 
             Label {
@@ -60,10 +85,19 @@ RowLayout {
                 Layout.alignment: Qt.AlignRight
                 text: "PLAYING"
                 lineHeight: 0.8
-                color: plasmoid.configuration.secondaryColor
-                font.bold: true
-                font.pixelSize: 16
-                font.family: plasmoid.configuration.fontFamily
+                font.family:    plasmoid.configuration.labelFont
+                color:          plasmoid.configuration.labelFontColor
+                font.bold:      plasmoid.configuration.labelFontBold
+                font.italic:    plasmoid.configuration.labelFontItalic
+                font.pixelSize: plasmoid.configuration.labelFontHeight
+                layer.enabled: plasmoid.configuration.labelShadowEnable
+                layer.effect: DropShadow {
+                    color:              plasmoid.configuration.labelShadowColor
+                    radius:             plasmoid.configuration.labelShadowRadius
+                    horizontalOffset:   plasmoid.configuration.labelShadowHoff
+                    verticalOffset:     plasmoid.configuration.labelShadowVoff
+                    samples:            plasmoid.configuration.labelShadowRadius*2
+                }
             }
 
             // This refers to the small controls you can find when hovering on the left part of the widget.
@@ -83,7 +117,6 @@ RowLayout {
                         source: "media-skip-backward"
                     }
                     padding: 0
-                    /* color: plasmoid.configuration.mainColor */
                     background: null
                     onClicked: {
                         root.mediaPrev()
@@ -98,7 +131,6 @@ RowLayout {
                                                                          : "media-playback-start"
                     }
                     padding: 0
-                    /* color: plasmoid.configuration.mainColor */
                     background: null
                     onClicked: {
                         root.mediaToggle()
@@ -111,7 +143,6 @@ RowLayout {
                         source: "media-skip-forward"
                     }
                     padding: 0
-                    /* color: plasmoid.configuration.mainColor */
                     background: null
                     onClicked: {
                         root.mediaNext()
@@ -124,26 +155,9 @@ RowLayout {
     // This is that little vertical bar between "NOW PLAYING" and the music info.
     Rectangle {
         id: separator
-        width: 1
-        color: plasmoid.configuration.mainColor
+        width: plasmoid.configuration.lineWidth
+        color: plasmoid.configuration.lineColor
         Layout.fillHeight: true
-    }
-
-    function formatPosition(pos, len) {
-        function pad(num, size) {
-            num = num.toString();
-            while (num.length < size)
-                num = "0" + num;
-            return num;
-        }
-        var mins = Math.floor(pos / 1000000 / 60)
-        var secs = Math.floor(pos / 1000000 % 60)
-        var max_mins = Math.floor(len / 1000000 / 60)
-        var max_secs = Math.floor(len / 1000000 % 60)
-        return "%1:%2/%3:%4".arg(pad(mins, 2))
-                            .arg(pad(secs, 2))
-                            .arg(pad(max_mins, 2))
-                            .arg(pad(max_secs, 2))
     }
 
     // The actual music information.
@@ -152,33 +166,52 @@ RowLayout {
         id: infoColumn
 
         PlasmaComponents.Label {
-            font.family: plasmoid.configuration.fontFamily
-            text: plasmoid.configuration.firstRowInfo === "name"   ? mediaSource.track
-                : plasmoid.configuration.firstRowInfo === "artist" ? mediaSource.artist
-                : plasmoid.configuration.firstRowInfo === "album"  ? mediaSource.album
-                : plasmoid.configuration.firstRowInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
-                : ""
             Layout.fillWidth: true
-            font.pixelSize: 28
-            color: plasmoid.configuration.mainColor
+            text: plasmoid.configuration.firstInfo === "name"   ? mediaSource.track
+                : plasmoid.configuration.firstInfo === "artist" ? mediaSource.artist
+                : plasmoid.configuration.firstInfo === "album"  ? mediaSource.album
+                : plasmoid.configuration.firstInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
+                : ""
+            font.family:    plasmoid.configuration.firstFont
+            color:          plasmoid.configuration.firstFontColor
+            font.bold:      plasmoid.configuration.firstFontBold
+            font.italic:    plasmoid.configuration.firstFontItalic
+            font.pixelSize: plasmoid.configuration.firstFontHeight
             lineHeight: 0.8
-            font.bold: true
             elide: Text.ElideRight
+            layer.enabled: plasmoid.configuration.firstShadowEnable
+            layer.effect: DropShadow {
+                color:              plasmoid.configuration.firstShadowColor
+                radius:             plasmoid.configuration.firstShadowRadius
+                horizontalOffset:   plasmoid.configuration.firstShadowHoff
+                verticalOffset:     plasmoid.configuration.firstShadowVoff
+                samples:            plasmoid.configuration.firstShadowRadius*2
+            }
         }
 
         PlasmaComponents.Label {
-            font.family: plasmoid.configuration.fontFamily
-            elide: Text.ElideRight
             Layout.maximumWidth: 300
             Layout.fillWidth: true
-            text: plasmoid.configuration.secondRowInfo === "name"   ? mediaSource.track
-                : plasmoid.configuration.secondRowInfo === "artist" ? mediaSource.artist
-                : plasmoid.configuration.secondRowInfo === "album"  ? mediaSource.album
-                : plasmoid.configuration.secondRowInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
+            text: plasmoid.configuration.secondInfo === "name"   ? mediaSource.track
+                : plasmoid.configuration.secondInfo === "artist" ? mediaSource.artist
+                : plasmoid.configuration.secondInfo === "album"  ? mediaSource.album
+                : plasmoid.configuration.secondInfo === "pos"    ? formatPosition(mediaSource.position, mediaSource.length)
                 : ""
-            font.pixelSize: 26
-            color: plasmoid.configuration.mainColor
+            font.family:    plasmoid.configuration.secondFont
+            color:          plasmoid.configuration.secondFontColor
+            font.bold:      plasmoid.configuration.secondFontBold
+            font.italic:    plasmoid.configuration.secondFontItalic
+            font.pixelSize: plasmoid.configuration.secondFontHeight
             lineHeight: 0.8
+            elide: Text.ElideRight
+            layer.enabled: plasmoid.configuration.secondShadowEnable
+            layer.effect: DropShadow {
+                color:              plasmoid.configuration.secondShadowColor
+                radius:             plasmoid.configuration.secondShadowRadius
+                horizontalOffset:   plasmoid.configuration.secondShadowHoff
+                verticalOffset:     plasmoid.configuration.secondShadowVoff
+                samples:            plasmoid.configuration.secondShadowRadius*2
+            }
         }
     }
 }
