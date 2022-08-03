@@ -10,9 +10,41 @@ import QtGraphicalEffects 1.12
  * (what people would normally call a 'View')
  */
 
-RowLayout {
+GridLayout {
     id: fullView
+
+    readonly property var alignOpts: [
+        {
+            "direction": Qt.LeftToRight,
+            "track": {
+                "alignment": Qt.AlignLeft,
+                "horizontal": Text.AlignLeft,
+                "elide": Text.ElideRight
+            },
+            "label": {
+                "alignment": Qt.AlignRight
+            }
+        },
+        {
+            "direction": Qt.RightToLeft,
+            "track": {
+                "alignment": Qt.AlignRight,
+                "horizontal": Text.AlignRight,
+                "elide": Text.ElideLeft
+            },
+            "label": {
+                "alignment": Qt.AlignLeft
+            }
+        }
+    ]
+
+    readonly property var alignOpt: alignOpts[plasmoid.configuration.alignment]
+
     focus: true
+    flow: GridLayout.LeftToRight
+    columns: -1
+    rows: 1
+    layoutDirection: alignOpt.direction
 
     // This controls plasmoid shortcuts.
     Keys.onReleased: {
@@ -46,7 +78,6 @@ RowLayout {
     }
 
     MouseArea {
-        // Layout.alignment: Qt.AlignRight
         id: mediaControlsMouseArea
         height: separator.height
         width: nowPlayingColumn.width
@@ -60,7 +91,7 @@ RowLayout {
             // These two labels correspond to the 'NOW PLAYING' text
             Label {
                 id: nowPlayingLabel1
-                Layout.alignment: Qt.AlignLeft
+                Layout.alignment: alignOpt.label.alignment
                 text: "NOW"
                 lineHeight: 0.8
                 font.family:    plasmoid.configuration.labelFont
@@ -80,7 +111,7 @@ RowLayout {
 
             Label {
                 id: nowPlayingLabel2
-                Layout.alignment: Qt.AlignLeft
+                Layout.alignment: alignOpt.label.alignment
                 text: "PLAYING"
                 lineHeight: 0.8
                 font.family:    plasmoid.configuration.labelFont
@@ -165,6 +196,9 @@ RowLayout {
 
         PlasmaComponents.Label {
             Layout.fillWidth: true
+            Layout.alignment: alignOpt.track.alignment
+            horizontalAlignment: alignOpt.track.horizontal
+            elide: alignOpt.track.elide
             text: plasmoid.configuration.firstInfo === "name"   ? mediaSource.track
                 : plasmoid.configuration.firstInfo === "artist" ? mediaSource.artist
                 : plasmoid.configuration.firstInfo === "album"  ? mediaSource.album
@@ -176,7 +210,6 @@ RowLayout {
             font.italic:    plasmoid.configuration.firstFontItalic
             font.pixelSize: plasmoid.configuration.firstFontHeight
             lineHeight: 0.8
-            elide: Text.ElideRight
             layer.enabled: plasmoid.configuration.firstShadowEnable
             layer.effect: DropShadow {
                 color:              plasmoid.configuration.firstShadowColor
@@ -188,8 +221,10 @@ RowLayout {
         }
 
         PlasmaComponents.Label {
-            Layout.maximumWidth: 300
             Layout.fillWidth: true
+            Layout.alignment: alignOpt.track.alignment
+            horizontalAlignment: alignOpt.track.horizontal
+            elide: alignOpt.track.elide
             text: plasmoid.configuration.secondInfo === "name"   ? mediaSource.track
                 : plasmoid.configuration.secondInfo === "artist" ? mediaSource.artist
                 : plasmoid.configuration.secondInfo === "album"  ? mediaSource.album
@@ -201,7 +236,6 @@ RowLayout {
             font.italic:    plasmoid.configuration.secondFontItalic
             font.pixelSize: plasmoid.configuration.secondFontHeight
             lineHeight: 0.8
-            elide: Text.ElideRight
             layer.enabled: plasmoid.configuration.secondShadowEnable
             layer.effect: DropShadow {
                 color:              plasmoid.configuration.secondShadowColor

@@ -337,19 +337,15 @@ Item {
                     offsetYValue:   cfg_labelShadowVoff
                     onColorValueChanged: {
                         cfg_labelShadowColor = colorValue
-                        console.log("fuck you")
                     }
                     onRadiusValueChanged: {
                         cfg_labelShadowRadius = radiusValue
-                        console.log("fuck you")
                     }
                     onOffsetXValueChanged: {
                         cfg_labelShadowHoff = offsetXValue
-                        console.log("fuck you")
                     }
                     onOffsetYValueChanged: {
                         cfg_labelShadowVoff = offsetYValue
-                        console.log("fuck you")
                     }
                 }
             }
