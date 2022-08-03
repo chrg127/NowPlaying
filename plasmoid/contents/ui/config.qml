@@ -49,6 +49,9 @@ Item {
 
     property alias cfg_lineWidth: thicknessSpinBox.value
     property color cfg_lineColor
+    property alias cfg_alignment: alignmentsComboBox.currentIndex
+    property int   cfg_background
+    property alias cfg_enableShortcuts: shortcutsCheckbox.checked
 
     function indexOf(list, toFind, def) {
         for (var i = 0; i < list.count; i++) {
@@ -161,7 +164,7 @@ Item {
 
                 InfoBox {
                     theModel: trackInfoModel
-                    startIndex: indexOf(trackInfoModel, cfg_firstInfo, 0)
+                    startIndex: indexOf(theModel, cfg_firstInfo, 0)
                     infoValue: cfg_firstRowInfo
                     onInfoValueChanged: {
                         cfg_firstInfo = infoValue
@@ -229,7 +232,7 @@ Item {
 
                 InfoBox {
                     theModel: trackInfoModel
-                    startIndex: indexOf(trackInfoModel, cfg_secondInfo, 0)
+                    startIndex: indexOf(theModel, cfg_secondInfo, 0)
                     infoValue: cfg_secondRowInfo
                     onInfoValueChanged: {
                         cfg_secondInfo = infoValue
@@ -358,6 +361,13 @@ Item {
                     font.pixelSize: 17
                 }
 
+                CheckBox {
+                    id: shortcutsCheckbox
+                    text: i18n("Enable shortcuts")
+                    tristate: false
+                    checked: cfg_enableShortcuts
+                }
+
                 RowLayout {
                     Label {
                         text: i18n("Line thickness:")
@@ -379,6 +389,49 @@ Item {
                         value: cfg_lineColor
                         onValueChanged: {
                             cfg_lineColor = value
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Label {
+                        text: i18n("Alignment:")
+                    }
+
+                    ComboBox {
+                        id: alignmentsComboBox
+                        model: [
+                            { text: i18n("Left"),  value: 0 },
+                            { text: i18n("Right"), value: 1 }
+                        ]
+                        focus: true
+                        currentIndex: 0
+                        textRole: "text"
+                    }
+                }
+
+                RowLayout {
+                    Label {
+                        text: i18n("Background hints:")
+                    }
+
+                    ComboBox {
+                        id: backgroundComboBox
+                        model: [
+                            { text: i18n("None"),           value: 0 },
+                            { text: i18n("Standard"),       value: 1 },
+                            { text: i18n("Translucent"),    value: 2 },
+                            { text: i18n("Shadowed"),       value: 4 }
+                        ]
+                        focus: true
+                        textRole: "text"
+                        currentIndex: 0
+                        onCurrentIndexChanged: {
+                            var current = model[currentIndex]
+                            if (current) {
+                                cfg_background = current.value
+                                configRoot.configurationChanged()
+                            }
                         }
                     }
                 }

@@ -10,7 +10,7 @@ Item {
     Layout.minimumWidth: units.gridUnit*25
     Layout.minimumHeight: units.gridUnit*5
 
-    Plasmoid.backgroundHints: "NoBackground"
+    Plasmoid.backgroundHints: plasmoid.configuration.background
 
     opacity: plasmoid.configuration.opacity/100
 

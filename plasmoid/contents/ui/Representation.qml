@@ -15,9 +15,8 @@ RowLayout {
     focus: true
 
     // This controls plasmoid shortcuts.
-    /*
     Keys.onReleased: {
-        if (!event.modifiers) {
+        if (!event.modifiers && plasmoid.configuration.enableShortcuts) {
             event.accepted = true
             if (event.key === Qt.Key_Space || event.key === Qt.Key_K) {
                 root.mediaToggle()
@@ -30,7 +29,6 @@ RowLayout {
             }
         }
     }
-    */
 
     function formatPosition(pos, len) {
         function pad(num, size) {
@@ -62,7 +60,7 @@ RowLayout {
             // These two labels correspond to the 'NOW PLAYING' text
             Label {
                 id: nowPlayingLabel1
-                Layout.alignment: Qt.AlignRight
+                Layout.alignment: Qt.AlignLeft
                 text: "NOW"
                 lineHeight: 0.8
                 font.family:    plasmoid.configuration.labelFont
@@ -82,7 +80,7 @@ RowLayout {
 
             Label {
                 id: nowPlayingLabel2
-                Layout.alignment: Qt.AlignRight
+                Layout.alignment: Qt.AlignLeft
                 text: "PLAYING"
                 lineHeight: 0.8
                 font.family:    plasmoid.configuration.labelFont
