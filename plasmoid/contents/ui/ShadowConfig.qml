@@ -58,7 +58,7 @@ QtLayouts.RowLayout {
 
     QtControls.SpinBox {
         id: offsetXSpinBox
-        from: 0
+        from: -100
         to: 100
         value: offsetXValue
 
@@ -69,7 +69,7 @@ QtLayouts.RowLayout {
 
     QtControls.SpinBox {
         id: offsetYSpinBox
-        from: 0
+        from: -100
         to: 100
         value: offsetYValue
 
